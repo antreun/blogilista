@@ -17,7 +17,7 @@ module.exports = Blog
 app.use(cors())
 app.use(bodyParser.json())
 
-const mongoUrl = 'mongodb://user:pass@ds247838.mlab.com:47838/hyfs'
+const mongoUrl = 'mongodb://@ds247838.mlab.com:47838/hyfs'
 mongoose.connect(mongoUrl)
 
 app.get('/api/blogs', (request, response) => {
