@@ -1,0 +1,19 @@
+{
+  "name": "blogilista",
+  "version": "1.0.0",
+  "description": "HY-FS Blogilista",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antreun/blogilista.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/antreun/blogilista/issues"
+  },
+  "homepage": "https://github.com/antreun/blogilista#readme"
+}
