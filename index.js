@@ -2,41 +2,29 @@ const http = require('http')
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
+const middleware = require('./utils/middleware')
 const cors = require('cors')
 const mongoose = require('mongoose')
-
-const Blog = mongoose.model('Blog', {
-  title: String,
-  author: String,
-  url: String,
-  likes: Number
-})
-
-module.exports = Blog
+if ( process.env.NODE_ENV !== 'production' ) {
+  require('dotenv').config()
+}
+const blogsRouter = require('./controllers/blogs')
 
 app.use(cors())
 app.use(bodyParser.json())
+app.use('/api/blogs', blogsRouter)
+app.use(express.static('build'))
+app.use(middleware.logger)
+app.use(middleware.error)
 
-const mongoUrl = 'mongodb://@ds247838.mlab.com:47838/hyfs'
+const mongoUrl = process.env.MONGODB_URI
 mongoose.connect(mongoUrl)
-
-app.get('/api/blogs', (request, response) => {
-  Blog
-    .find({})
-    .then(blogs => {
-      response.json(blogs)
-    })
-})
-
-app.post('/api/blogs', (request, response) => {
-  const blog = new Blog(request.body)
-
-  blog
-    .save()
-    .then(result => {
-      response.status(201).json(result)
-    })
-})
+  .then( () => {
+    console.log('connected to database', mongoUrl)
+  })
+  .catch( err => {
+    console.log(err)
+  })
 
 const PORT = 3003
 app.listen(PORT, () => {
